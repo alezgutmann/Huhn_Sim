@@ -29,7 +29,7 @@ public class AgentSystem extends LWJGLBasisFenster {
         super(title, width, height);
 		initDisplay();
 		agentenSpielwiese = ObjektManager.getExemplar();
-		erzeugeAgenten(10);
+		erzeugeAgenten(config.AGENTEN_ANZAHL);
 	}
 
 	private void erzeugeAgenten(int anz) {
@@ -86,7 +86,7 @@ public class AgentSystem extends LWJGLBasisFenster {
 	}
 
 	public static void main(String[] args) {
-       new AgentSystem("vividus Verlag. Dino-Buch. Kap. 1 (particle_version13_focus_on_swarm): AgentSystem.java",
-             800, 450).start();
+       new AgentSystem(config.TITLE,
+             config.WIDTH, config.HEIGHT).start();
 	}
 }

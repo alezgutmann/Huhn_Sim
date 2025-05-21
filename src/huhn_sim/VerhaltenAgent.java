@@ -15,16 +15,16 @@ public class VerhaltenAgent implements Verhalten {
 	@Override
 	public void update(double time) {
 		Vektor2D mausForce = steering.forceMousePosition(agent.position);
-		mausForce.mult(100);
+		mausForce.mult(config.MAUS_FORCE);
 		agent.applyForce(mausForce);
 		Vektor2D separationForce = steering.separation(agent, agent.SWARM_DISTANZ);
-		separationForce.mult(1);
+		separationForce.mult(config.SEPERATION_FORCE);
 		agent.applyForce(separationForce);
 		Vektor2D alignmentForce = steering.alignment(agent, agent.SWARM_DISTANZ);
-		alignmentForce.mult(0.12);
+		alignmentForce.mult(config.ALIGNMENT_FORCE);
 		agent.applyForce(alignmentForce);
 		Vektor2D cohesionForce = steering.cohesion(agent, agent.SWARM_DISTANZ);
-		cohesionForce.mult(0.01);
+		cohesionForce.mult(config.COHESION_FORCE);
 		agent.applyForce(cohesionForce);
 		
 		// Rotationsrate einbeziehen!
