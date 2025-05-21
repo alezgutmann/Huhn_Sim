@@ -23,6 +23,9 @@ public class Agent extends BewegendesObjekt {
 		this.objektManager = objektManager;
 	}
 
+	public void render(int framebuffer) {
+		POGL.renderSwarmObjectWithForces((float) position.x, (float) position.y, 10, velocity, getLastAcceleration(), framebuffer);
+	}
 	@Override
 	public void render() {
 		POGL.renderSwarmObjectWithForces((float) position.x, (float) position.y, 10, velocity, getLastAcceleration());

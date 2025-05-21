@@ -3,6 +3,7 @@ package huhn_sim;
 public class config {
 	public static String TITLE = "Hühner-Simulation";
 	public static String fragShaderPath = "src/shader/staub_frag_shader.fs";
+	public static String visualisationShaderPath = "src/shader/staub_visualisation_shader.fs";
 	public static int HEIGHT = 720;
 	public static int WIDTH = 1260;
 	public static int AGENTEN_ANZAHL = 20;
