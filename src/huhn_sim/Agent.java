@@ -1,5 +1,6 @@
 package huhn_sim;
 
+import libs.Model;
 import libs.POGL;
 import libs.Vektor2D;
 
@@ -23,6 +24,11 @@ public class Agent extends BewegendesObjekt {
 		this.objektManager = objektManager;
 	}
 
+	
+	public void render(Model object) {
+		POGL.renderSwarmObjectWithForces((float) position.x, (float) position.y, 10, velocity, getLastAcceleration(), object);
+	}
+	
 	@Override
 	public void render() {
 		POGL.renderSwarmObjectWithForces((float) position.x, (float) position.y, 10, velocity, getLastAcceleration());

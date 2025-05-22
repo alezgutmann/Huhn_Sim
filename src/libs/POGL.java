@@ -35,6 +35,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
+import huhn_sim.config;
 import libs.LineareAlgebra;
 import libs.Vektor2D;
 
@@ -578,6 +579,48 @@ public class POGL {
 		renderKreis(0, 0, 5, radius);
 		glColor4f(0, 0, 0, 1);
 		renderKreis(0, 0, 5, radius-2);
+		
+		// *****************************************************************
+		// Visualisierung der Geschwindigkeit
+		// der Wert off soll die Geschwindigkeit durch einen gr��eren Abstand visualisieren
+		int off = radius + 1 + (int)(velocity.length()/5);
+		double winkel = LineareAlgebra.angleDegree(velocity, new Vektor2D(1,0));
+		
+		// da immer der kleinere Winkel zwischen den Vektoren geliefert wird, m�ssen
+		// wir etwas korrigieren
+		if (velocity.y<0)
+			winkel = 180 + (180-winkel);
+
+		glColor4f(1, 1, 0, 1);
+		renderPfeil(x, y, off, (float)winkel, 15);
+		// *****************************************************************
+		
+		// *****************************************************************
+		// Visualisierung der Beschleunigung
+		off = radius + 1 + (int)(acceleration.length()/10);
+		winkel = LineareAlgebra.angleDegree(acceleration, new Vektor2D(1,0));
+		if (acceleration.y<0)
+			winkel = 180 + (180-winkel);
+
+		glColor4f(1, 0, 0, 1);
+		renderPfeil(x, y, off, (float)winkel, 15);
+		// *****************************************************************
+	}
+	
+	public static void renderSwarmObjectWithForces(float x, float y, int radius, Vektor2D velocity, Vektor2D acceleration, Model object) {
+		glLoadIdentity();
+		glTranslated(x, y, 0);
+		glScaled(config.HühnerSize, config.HühnerSize, config.HühnerSize);
+		
+		glColor4f(1, 1, 1, 1);
+		if (config.loadFromOBJFile){
+			renderObject(object);
+		}
+		else {
+			renderKreis(0, 0, 5, radius);
+			glColor4f(0, 0, 0, 1);
+			renderKreis(0, 0, 5, radius-2);
+		}
 		
 		// *****************************************************************
 		// Visualisierung der Geschwindigkeit
