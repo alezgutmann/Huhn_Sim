@@ -12,10 +12,10 @@ public class Agent extends BewegendesObjekt {
 		super(position, velocity);
 		this.id = ++objCounter;
 
-		setMass(1);
-		setMaxSpeed(100);
-		setMaxTurnRate(15);
-		setSwarmDistanz(100);
+		setMass(config.AGENTEN_MASS);
+		setMaxSpeed(config.AGENTEN_MAX_SPEED);
+		setMaxTurnRate(config.AGENTEN_MAX_TURN_RATE);
+		setSwarmDistanz(config.AGENTEN_SWARM_DISTANZ);
 
 		setWegHistorie(new Weg2DDynamisch(20));
 	}
