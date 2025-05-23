@@ -609,12 +609,17 @@ public class POGL {
 	
 	public static void renderSwarmObjectWithForces(float x, float y, int radius, Vektor2D velocity, Vektor2D acceleration, Model object) {
 		glLoadIdentity();
-		glTranslated(x, y, 0);
-		glScaled(config.HühnerSize, config.HühnerSize, config.HühnerSize);
+		glTranslated(x, y, config.zOFFSET);
+		glScaled(config.HühnerSize, config.HühnerSize,1);
 		
 		glColor4f(1, 1, 1, 1);
 		if (config.loadFromOBJFile){
-			renderObject(object);
+			if (config.renderFromQUADS) {
+				renderObjectVierecke(object);
+			}
+			else {
+				renderObject(object);
+			}	
 		}
 		else {
 			renderKreis(0, 0, 5, radius);

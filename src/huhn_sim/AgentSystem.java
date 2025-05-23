@@ -60,7 +60,7 @@ public class AgentSystem extends LWJGLBasisFenster {
 		initDisplay();
 		shader_setup();
 		loadObject(config.OBJFilePath);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		agentenSpielwiese = ObjektManager.getExemplar();
 		erzeugeAgenten(config.AGENTEN_ANZAHL);
 
