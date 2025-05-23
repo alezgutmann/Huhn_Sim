@@ -27,6 +27,7 @@ public class VerhaltenAgent implements Verhalten {
 		cohesionForce.mult(config.COHESION_FORCE);
 		agent.applyForce(cohesionForce);
 		
+		
 		// Rotationsrate einbeziehen!
 		Vektor2D wunschVelocity = LineareAlgebra.add(agent.getVelocity(), LineareAlgebra.mult(agent.getAccelerationInRespectToMass(), time));
 		if (agent.getVelocity().length()!=0 && wunschVelocity.length()!=0) {

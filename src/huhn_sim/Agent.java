@@ -1,5 +1,6 @@
 package huhn_sim;
 
+import libs.Model;
 import libs.POGL;
 import libs.Vektor2D;
 
@@ -11,10 +12,10 @@ public class Agent extends BewegendesObjekt {
 		super(position, velocity);
 		this.id = ++objCounter;
 
-		setMass(1);
-		setMaxSpeed(100);
-		setMaxTurnRate(15);
-		setSwarmDistanz(100);
+		setMass(config.AGENTEN_MASS);
+		setMaxSpeed(config.AGENTEN_MAX_SPEED);
+		setMaxTurnRate(config.AGENTEN_MAX_TURN_RATE);
+		setSwarmDistanz(config.AGENTEN_SWARM_DISTANZ);
 
 		setWegHistorie(new Weg2DDynamisch(20));
 	}
@@ -23,6 +24,11 @@ public class Agent extends BewegendesObjekt {
 		this.objektManager = objektManager;
 	}
 
+	
+	public void render(Model object) {
+		POGL.renderSwarmObjectWithForces((float) position.x, (float) position.y, 10, velocity, getLastAcceleration(), object);
+	}
+	
 	@Override
 	public void render() {
 		POGL.renderSwarmObjectWithForces((float) position.x, (float) position.y, 10, velocity, getLastAcceleration());
