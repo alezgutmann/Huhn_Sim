@@ -1,6 +1,6 @@
 # Blender 4.2.3 LTS
 # www.blender.org
-mtllib Kueken.mtl
+mtllib kueken.mtl
 o Kuecken
 v -0.010210 0.007862 0.003579
 v -0.010090 0.007935 0.003230
