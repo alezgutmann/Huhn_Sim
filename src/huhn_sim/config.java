@@ -1,16 +1,16 @@
 package huhn_sim;
-
 public class config {
 	public static String TITLE = "Hühner-Simulation";
 	public static int HEIGHT = 720;
 	public static int WIDTH = 1260;
 	public static boolean loadFromOBJFile = true;
 	public static String fragShaderPath = "src/shader/staub_frag_shader.fs";
+	public static double rainbowMultiplier = 9.0; // um welchen Faktor die Hühner im Rainbow mode schneller sein sollen 
 	public static String OBJFilePath = "resources/maennchen.obj";
 	public static boolean renderFromQUADS = false; //funktioniert momentan noch nicht naja egal
-	public static double HühnerSize = 3.0;
-	public static double zOFFSET = -2.0; //wie tief huhn im boden "steckt"
-	public static int AGENTEN_ANZAHL = 20;
+	public static double HühnerSize = 10.0;
+	public static double zOFFSET = 0; //wie tief huhn im boden "steckt" bzw heraus kommt
+	public static int AGENTEN_ANZAHL = 2;
 	public static int AGENTEN_MASS = 1;
 	public static int AGENTEN_MAX_SPEED = 100;
 	public static int AGENTEN_MAX_TURN_RATE = 15;
