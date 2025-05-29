@@ -182,9 +182,6 @@ public class AgentSystem extends LWJGLBasisFenster {
 				}
 				
 				aktAgent.render(object);
-				// nächstes Korn ermitteln
-				
-				// wenn kein korn vorhanden dann halt nur nach maus gehen
 				aktAgent.update(diff);
 			}
 

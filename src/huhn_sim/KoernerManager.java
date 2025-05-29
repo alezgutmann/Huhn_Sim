@@ -1,5 +1,7 @@
 package huhn_sim;
 
+import libs.Vektor2D;
+
 public class KoernerManager {
 	Korn[] koernerArray;
 	int koernercount = 0;
@@ -10,6 +12,11 @@ public class KoernerManager {
 	}
 	
 	public void addKorn(Korn korn) {
+		// korn position randomizen etwas
+		korn = new Korn((new Vektor2D(korn.position.x + (Math.random() - 0.5) * config.KORN_SPREAD, 
+		                               korn.position.y + (Math.random() - 0.5) * config.KORN_SPREAD)));
+		
+		
 		 if (koernercount == koernerArray.length) {
 	            // Resize array if full
 	            Korn[] newArray = new Korn[koernerArray.length + 10];
