@@ -101,4 +101,65 @@ public class Steuerungsverhalten {
 		LineareAlgebra.normalize(steeringForce);
 		return steeringForce;
 	}
+	
+	public Vektor2D kornhesion(Agent me, double dist) {
+		Vektor2D steeringForce = new Vektor2D(0, 0);
+		
+		// schaut, welches korn am nächsten ist
+		double minDist = Double.MAX_VALUE;
+		int closestKorn = -1;
+		for (int i = 0; i < me.kornManager.getKoernerCount(); i++) {
+			BasisObjekt bObj = me.kornManager.getKorn(i);
+			if (bObj instanceof Korn) {
+				Korn bObjF = (Korn)bObj;
+				if (LineareAlgebra.euklDistanz(me.position, bObjF.position) < minDist) {
+					minDist = LineareAlgebra.euklDistanz(me.position, bObjF.position);
+					closestKorn = i;
+				}
+			}
+		}
+		
+		// wenn es ein naechstes Korn gibt, wird dieses verfolgt/ gegessen
+		if (closestKorn != -1) {
+			BasisObjekt bObj = me.kornManager.getKorn(closestKorn);
+			
+			if (bObj instanceof Korn) {
+				Korn bObjF = (Korn)bObj;
+				
+				// wenn ein Korn nah genug ist, wird es gegessen
+				if (LineareAlgebra.euklDistanz(me.position, bObjF.position) < config.SCHNABELWEITE) {
+					me.kornManager.removeKorn(closestKorn);
+				}
+				
+				// ob ein korn gesehen wird
+				if (LineareAlgebra.euklDistanz(me.position, bObjF.position) < dist){
+					steeringForce.add(LineareAlgebra.sub(bObjF.position, me.position));
+				}
+			}
+		}
+		
+		/*
+		for (int i = 0; i < me.kornManager.getKoernerCount(); i++) {
+			BasisObjekt bObj = me.kornManager.getKorn(i);
+			
+			if (bObj instanceof Korn) {
+				Korn bObjF = (Korn)bObj;
+				
+				// wenn ein Korn nah genug ist, wird es gegessen
+				if (LineareAlgebra.euklDistanz(me.position, bObjF.position) < config.SCHNABELWEITE) {
+					me.kornManager.removeKorn(i);
+					continue;
+				}
+				
+				// ob ein korn gesehen wird
+				if (LineareAlgebra.euklDistanz(me.position, bObjF.position) < dist){
+					steeringForce.add(LineareAlgebra.sub(bObjF.position, me.position));
+					break;
+				}
+			}
+		}*/
+
+		LineareAlgebra.normalize(steeringForce);
+		return steeringForce;
+	}
 }

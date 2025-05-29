@@ -52,6 +52,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.input.Keyboard;
 
 import libs.LWJGLBasisFenster;
 import libs.Model;
@@ -70,6 +71,8 @@ public class AgentSystem extends LWJGLBasisFenster {
 	Model object = null;
 	
 	boolean MousebuttonDown = false;
+	
+	KoernerManager kornManager = new KoernerManager();
 
 	public AgentSystem(String title, int width, int height) {
 		super(title, width, height);
@@ -102,6 +105,7 @@ public class AgentSystem extends LWJGLBasisFenster {
 					new Vektor2D(rand.nextFloat() * 20, 0), 10, 1f, 1f, 1f);
 			agent.setVerhalten(new VerhaltenAgent(agent));
 			agent.setObjektManager(agentenSpielwiese);
+			agent.setKoernerManager(kornManager);
 			agentenSpielwiese.registrierePartikel(agent);
 		}
 	}
@@ -143,6 +147,15 @@ public class AgentSystem extends LWJGLBasisFenster {
 				MousebuttonDown = false;
 			}
 			
+			// Inside your renderLoop, after processing mouse input:
+			if (Keyboard.isKeyDown(Keyboard.KEY_K)) {
+			    // Example: Place Korn at mouse position or center
+			    int x = Mouse.getX();
+			    int y = HEIGHT - Mouse.getY(); // Convert to window coordinates if needed
+			    Korn korn = new Korn(new Vektor2D(x,y));
+			    kornManager.addKorn(korn);
+			}
+			
 			// holen der uniform locations und anschliessendes setzen
 			
 			int timeLocation = glGetUniformLocation(staubShader, "time");
@@ -150,6 +163,7 @@ public class AgentSystem extends LWJGLBasisFenster {
 			int mouseDownLocation = glGetUniformLocation(staubShader,"mouseDown");
 			glUniform1i(mouseDownLocation, MousebuttonDown ? 1 : 0);
 			
+			kornManager.render();
 			for (int i = 1; i <= agentenSpielwiese.getAgentSize(); i++) {
 				Agent aktAgent = agentenSpielwiese.getAgent(i);
 
@@ -157,7 +171,7 @@ public class AgentSystem extends LWJGLBasisFenster {
 				// Rainbow Mode
 				if (MousebuttonDown) {
 					aktAgent.MAX_SPEED = config.AGENTEN_MAX_SPEED * config.rainbowMultiplier / 2;
-					aktAgent.MAX_TURN_RATE = config.AGENTEN_MAX_TURN_RATE * config.rainbowMultiplier;
+					aktAgent.MAX_TURN_RATE = config.AGENTEN_MAX_TURN_RATE * config.rainbowMultiplier * 100;
 					aktAgent.MASS = config.AGENTEN_MASS / config.rainbowMultiplier;
 					//aktAgent.acceleration.mult(config.rainbowMultiplier);
 				}
@@ -168,6 +182,9 @@ public class AgentSystem extends LWJGLBasisFenster {
 				}
 				
 				aktAgent.render(object);
+				// nächstes Korn ermitteln
+				
+				// wenn kein korn vorhanden dann halt nur nach maus gehen
 				aktAgent.update(diff);
 			}
 

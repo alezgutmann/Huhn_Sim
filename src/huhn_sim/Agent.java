@@ -7,6 +7,7 @@ import libs.Vektor2D;
 public class Agent extends BewegendesObjekt {
 	private static int objCounter = 0;
 	public ObjektManager objektManager;
+	public KoernerManager kornManager;
 
 	public Agent(Vektor2D position, Vektor2D velocity, int radius, float r, float g, float b) {
 		super(position, velocity);
@@ -23,6 +24,10 @@ public class Agent extends BewegendesObjekt {
 	public void setObjektManager(ObjektManager objektManager) {
 		this.objektManager = objektManager;
 	}
+	
+	public void setKoernerManager(KoernerManager kornManager) {
+		this.kornManager = kornManager;
+	}
 
 	
 	public void render(Model object) {
@@ -32,5 +37,9 @@ public class Agent extends BewegendesObjekt {
 	@Override
 	public void render() {
 		POGL.renderSwarmObjectWithForces((float) position.x, (float) position.y, 10, velocity, getLastAcceleration());
+	}
+	
+	public void render_korn() {
+		
 	}
 }

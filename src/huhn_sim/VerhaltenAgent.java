@@ -26,6 +26,11 @@ public class VerhaltenAgent implements Verhalten {
 		Vektor2D cohesionForce = steering.cohesion(agent, agent.SWARM_DISTANZ);
 		cohesionForce.mult(config.COHESION_FORCE);
 		agent.applyForce(cohesionForce);
+		Vektor2D kornForce = steering.kornhesion(agent, config.SICHTWEITE);
+		kornForce.mult(config.KOERNER_FORCE);
+		agent.applyForce(kornForce);
+		
+		// körnerkraft eingeziehen
 		
 		
 		// Rotationsrate einbeziehen!
