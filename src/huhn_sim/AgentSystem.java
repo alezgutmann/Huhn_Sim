@@ -106,6 +106,10 @@ public class AgentSystem extends LWJGLBasisFenster {
 			agent.setVerhalten(new VerhaltenAgent(agent));
 			agent.setObjektManager(agentenSpielwiese);
 			agent.setKoernerManager(kornManager);
+			if (i == 0){
+				agent.isSchwarzesSchaf = true; //es gibt immer ein schwarzes schaf
+				agent.MAX_SPEED *= 10;
+			}
 			agentenSpielwiese.registrierePartikel(agent);
 		}
 	}

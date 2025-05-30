@@ -24,9 +24,9 @@ public class config {
 	public static double ALIGNMENT_FORCE = 2;
 	public static double COHESION_FORCE = 3;
 	public static double KOERNER_FORCE = 5; // soll später die FORCE die die hühner zu körnern verspüren darstellen
-	public static double HOMING_FORCE = 10;
-	public static double SCHWARZES_SCHAF_FORCE;
+	public static double HOMING_FORCE = 30;
+	public static double SCHWARZES_SCHAF_FORCE = 100;
 	public static double SICHTWEITE = 2000; // ab wann die hühner die körner sehen
-	public static double SCHNABELWEITE = 50; // distanz die ein huhn zum korn haben muss um es zu schnabulieren
+	public static double SCHNABELWEITE = 20; // distanz die ein huhn zum korn haben muss um es zu schnabulieren
 	public static double KORN_SPREAD = 50; // wie weit die körner "gestreut" werden
 }
