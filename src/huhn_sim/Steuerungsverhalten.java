@@ -137,29 +137,10 @@ public class Steuerungsverhalten {
 				}
 			}
 		}
-		
-		/*
-		for (int i = 0; i < me.kornManager.getKoernerCount(); i++) {
-			BasisObjekt bObj = me.kornManager.getKorn(i);
-			
-			if (bObj instanceof Korn) {
-				Korn bObjF = (Korn)bObj;
-				
-				// wenn ein Korn nah genug ist, wird es gegessen
-				if (LineareAlgebra.euklDistanz(me.position, bObjF.position) < config.SCHNABELWEITE) {
-					me.kornManager.removeKorn(i);
-					continue;
-				}
-				
-				// ob ein korn gesehen wird
-				if (LineareAlgebra.euklDistanz(me.position, bObjF.position) < dist){
-					steeringForce.add(LineareAlgebra.sub(bObjF.position, me.position));
-					break;
-				}
-			}
-		}*/
 
 		LineareAlgebra.normalize(steeringForce);
 		return steeringForce;
 	}
+	
+	
 }

@@ -1,4 +1,7 @@
 package huhn_sim;
+
+import libs.Vektor2D;
+
 public class config {
 	public static String TITLE = "Hühner-Simulation";
 	public static int HEIGHT = 720;
@@ -15,12 +18,15 @@ public class config {
 	public static int AGENTEN_MAX_SPEED = 100;
 	public static int AGENTEN_MAX_TURN_RATE = 15;
 	public static int AGENTEN_SWARM_DISTANZ = 150;
+	public static Vektor2D HOME_POSITION = new Vektor2D(WIDTH/2,HEIGHT/2); // alle hühner versuchen zu dieser HomePosition zurückzukehren
 	public static double MAUS_FORCE = 0;
-	public static double SEPERATION_FORCE = 5;
+	public static double SEPERATION_FORCE = 6;
 	public static double ALIGNMENT_FORCE = 2;
-	public static double COHESION_FORCE = 0;
-	public static double KOERNER_FORCE = 50; // soll später die FORCE die die hühner zu körnern verspüren darstellen
+	public static double COHESION_FORCE = 3;
+	public static double KOERNER_FORCE = 5; // soll später die FORCE die die hühner zu körnern verspüren darstellen
+	public static double HOMING_FORCE = 10;
+	public static double SCHWARZES_SCHAF_FORCE;
 	public static double SICHTWEITE = 2000; // ab wann die hühner die körner sehen
-	public static double SCHNABELWEITE = 10; // distanz die ein huhn zum korn haben muss um es zu schnabulieren
+	public static double SCHNABELWEITE = 50; // distanz die ein huhn zum korn haben muss um es zu schnabulieren
 	public static double KORN_SPREAD = 50; // wie weit die körner "gestreut" werden
 }

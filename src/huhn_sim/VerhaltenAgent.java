@@ -29,6 +29,14 @@ public class VerhaltenAgent implements Verhalten {
 		Vektor2D kornForce = steering.kornhesion(agent, config.SICHTWEITE);
 		kornForce.mult(config.KOERNER_FORCE);
 		agent.applyForce(kornForce);
+		Vektor2D zuhauseForce = steering.forceSeek(agent.getPosition(), agent.getVelocity(), config.HOME_POSITION);
+		zuhauseForce.mult(config.HOMING_FORCE);
+		agent.applyForce(zuhauseForce);
+		if (agent.isSchwarzesSchaf == true) {
+			Vektor2D randomForce = steering.randomForce();
+			randomForce.mult(config.SCHWARZES_SCHAF_FORCE);
+			agent.applyForce(randomForce);
+		}
 		
 		// körnerkraft eingeziehen
 		

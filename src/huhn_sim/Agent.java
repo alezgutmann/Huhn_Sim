@@ -8,6 +8,7 @@ public class Agent extends BewegendesObjekt {
 	private static int objCounter = 0;
 	public ObjektManager objektManager;
 	public KoernerManager kornManager;
+	public boolean isSchwarzesSchaf = false;
 
 	public Agent(Vektor2D position, Vektor2D velocity, int radius, float r, float g, float b) {
 		super(position, velocity);
