@@ -38,9 +38,6 @@ public class VerhaltenAgent implements Verhalten {
 			agent.applyForce(randomForce);
 		}
 		
-		// körnerkraft eingeziehen
-		
-		
 		// Rotationsrate einbeziehen!
 		Vektor2D wunschVelocity = LineareAlgebra.add(agent.getVelocity(), LineareAlgebra.mult(agent.getAccelerationInRespectToMass(), time));
 		if (agent.getVelocity().length()!=0 && wunschVelocity.length()!=0) {

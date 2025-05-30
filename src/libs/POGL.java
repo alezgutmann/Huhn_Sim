@@ -75,7 +75,15 @@ public class POGL {
 		glVertex3f(-1, 1, 0);
 		glEnd();
 	}
-
+	
+	public static void renderDreieck(float height, float width) {
+		glBegin(GL_TRIANGLES);
+		glVertex3f(-width/2,-height/2,0);
+		glVertex3f(-width/2,height/2,0);
+		glVertex3f(width/2,0,0);
+		glEnd();
+	}
+	
 	public static void renderViereckMitTexturbindung() {
 		glBegin(GL_QUADS);
 		glTexCoord2f(0, 0);
@@ -622,9 +630,13 @@ public class POGL {
 			}	
 		}
 		else {
-			renderKreis(0, 0, 5, radius);
+			renderKreis(0, 0, 5, radius*2);
 			glColor4f(0, 0, 0, 1);
-			renderKreis(0, 0, 5, radius-2);
+			glTranslated(radius*1.4,-radius*2,0);
+			renderKreis(0, 0, 5, radius* 1.3f);
+			glColor4f(0, 0, 0, 1);
+			glTranslated(radius*(1.3),0,0);
+			renderDreieck(15,15);
 		}
 		
 		// *****************************************************************
