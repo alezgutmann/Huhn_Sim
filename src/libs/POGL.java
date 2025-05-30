@@ -41,6 +41,7 @@ import libs.Vektor2D;
 
 import libs.Torus;
 import libs.Weg2DDynamisch;
+import static org.lwjgl.opengl.GL11.glRotated;
 
 // POGL = "Primitives of OpenGL" 
 public class POGL {
@@ -622,6 +623,10 @@ public class POGL {
 		
 		glColor4f(1, 1, 1, 1);
 		if (config.loadFromOBJFile){
+			glScaled(1000,1000,1);
+			glRotated(config.OBJRotation.x,1,0,0);
+			glRotated(config.OBJRotation.y,0,1,0);
+			glRotated(config.OBJRotation.z,0,0,1);
 			if (config.renderFromQUADS) {
 				renderObjectVierecke(object);
 			}
@@ -638,6 +643,9 @@ public class POGL {
 			glTranslated(radius*(1.3),0,0);
 			renderDreieck(15,15);
 		}
+		
+		if (!config.debug)
+			return;
 		
 		// *****************************************************************
 		// Visualisierung der Geschwindigkeit
