@@ -29,8 +29,10 @@ public class VerhaltenAgent implements Verhalten {
 		Vektor2D kornForce = steering.kornhesion(agent, config.SICHTWEITE);
 		kornForce.mult(config.KOERNER_FORCE);
 		agent.applyForce(kornForce);
+		double homingMultiplier; // je weiter die hühner vom home entfernt sind, desto stärker zieht es sie wieder dahin
+		homingMultiplier = LineareAlgebra.euklDistanz(agent.getPosition(), config.HOME_POSITION);
 		Vektor2D zuhauseForce = steering.forceSeek(agent.getPosition(), agent.getVelocity(), config.HOME_POSITION);
-		zuhauseForce.mult(config.HOMING_FORCE);
+		zuhauseForce.mult(config.HOMING_FORCE * homingMultiplier);
 		agent.applyForce(zuhauseForce);
 		if (agent.isSchwarzesSchaf == true) {
 			Vektor2D randomForce = steering.randomForce();

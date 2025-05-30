@@ -24,11 +24,11 @@ public class config {
 	public static int AGENTEN_SWARM_DISTANZ = 150;
 	public static Vektor2D HOME_POSITION = new Vektor2D(WIDTH/2,HEIGHT/2); // alle hühner versuchen zu dieser HomePosition zurückzukehren
 	public static double MAUS_FORCE = 0;
-	public static double SEPERATION_FORCE = 2;
+	public static double SEPERATION_FORCE = 5;
 	public static double ALIGNMENT_FORCE = 2;
-	public static double COHESION_FORCE = 3;
+	public static double COHESION_FORCE = 1;
 	public static double KOERNER_FORCE = 20; // soll später die FORCE die die hühner zu körnern verspüren darstellen
-	public static double HOMING_FORCE = 30;
+	public static double HOMING_FORCE = 0.1;
 	public static double SCHWARZES_SCHAF_FORCE = 100;
 	public static double SICHTWEITE = 200; // ab wann die hühner die körner sehen
 	public static double SCHNABELWEITE = 10; // distanz die ein huhn zum korn haben muss um es zu schnabulieren
