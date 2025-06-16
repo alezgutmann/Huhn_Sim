@@ -624,9 +624,11 @@ public class POGL {
 		glColor4f(1, 1, 1, 1);
 		if (config.loadFromOBJFile){
 			glScaled(1000,1000,1);
+			//Rotation des Huhnes aufgrund seiner Richtung miteinbeziehen:
+			double winkel = LineareAlgebra.angleDegree(velocity, new Vektor2D(1,0));
 			glRotated(config.OBJRotation.x,1,0,0);
 			glRotated(config.OBJRotation.y,0,1,0);
-			glRotated(config.OBJRotation.z,0,0,1);
+			glRotated(config.OBJRotation.z - winkel,0,0,1);
 			if (config.renderFromQUADS) {
 				renderObjectVierecke(object);
 			}

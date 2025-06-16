@@ -1,6 +1,7 @@
 package huhn_sim;
 
 import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.glRotatef;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
 import static org.lwjgl.opengl.GL11.GL_FILL;
@@ -59,6 +60,7 @@ import libs.Model;
 import libs.POGL;
 import libs.Vektor2D;
 import libs.ShaderUtilities;
+import static org.lwjgl.opengl.GL11.glFrustum;
 
 public class AgentSystem extends LWJGLBasisFenster {
 	private ObjektManager agentenSpielwiese;
@@ -140,8 +142,17 @@ public class AgentSystem extends LWJGLBasisFenster {
 
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			glOrtho(0, WIDTH, HEIGHT, 0, -100, 100);
+			// Frustum ?
+			glFrustum(0, WIDTH, HEIGHT, 0, 10, -20);
+			
+			//glOrtho(0, WIDTH, HEIGHT, 0, 10, -20);
+			glOrtho(0, WIDTH, HEIGHT, 0, 10, -20);
+			// hier maybe was machen aber erst mal nachfragen
+			//glTranslated(0,0, -5);
+//			glRotatef(-45.0f,1.0f,0.0f,0.0f);
+			
 			glMatrixMode(GL_MODELVIEW);
+			
 			glDisable(GL_DEPTH_TEST);
 			
 			if (Mouse.isButtonDown(0)) {
