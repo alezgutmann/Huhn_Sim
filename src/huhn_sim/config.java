@@ -11,6 +11,7 @@ public class config {
 	public static int WIDTH = 1260;
 	public static boolean loadFromOBJFile = true;
 	public static String fragShaderPath = "src/shader/staub_frag_shader.fs";
+	public static String vertShaderPath = "src/shader/tiefe_vert_shader.vs";
 	public static double rainbowMultiplier = 9.0; // um welchen Faktor die Hühner im Rainbow mode schneller sein sollen 
 	public static String OBJFilePath = "resources/huhn_weiss.obj";
 	public static Vektor3D OBJRotation = new Vektor3D(90,0,90); // um wie viel grad pro achse gedreht werden soll

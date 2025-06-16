@@ -1,22 +1,21 @@
 #version 130
 uniform int mouseDown;
 uniform float time;
-
-vec3 hsv2rgb_converter(vec3 c) {
-    vec4 K = vec4(1.0, 2.0/3.0, 1.0/3.0, 3.0);
-    vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
-    return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
-}
+varying vec4 color;
 
 void main() {
-	if ( mouseDown == 1){
-		//Hühnerfarbe im Psycho Modus
-		float hue = time * 0.4;
-        vec3 color = hsv2rgb_converter(vec3(hue, 1.0, 1.0));
-        gl_FragColor = vec4(color, 1.0);
+	if (mouseDown == 1){
+		float pi = 3.1415;
+        float r = sin(time) * 0.5 + 0.5;
+        float g = sin(time - 2.0 * pi / 3.0) * 0.5 + 0.5;
+        float b = sin(time - 4.0 * pi / 3.0) * 0.5 + 0.5;
+        vec3 regenbogenfarbe = vec3(r, g, b);
+        gl_FragColor = vec4(regenbogenfarbe, 1.0);
+        
 	}
 	else{
-		gl_FragColor = vec4(1, 0.3, 0, 0.3); //Hühnerfarbe im Normalmodus
+		gl_FragColor = color;
+		//vec4(1, 0.3, 0, 0.3); //hühnerfarbe im normalmodus
 	}
 	
 }
