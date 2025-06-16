@@ -1,6 +1,7 @@
 package huhn_sim;
 
 import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.glRotatef;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
 import static org.lwjgl.opengl.GL11.GL_FILL;
@@ -27,6 +28,7 @@ import static org.lwjgl.opengl.GL11.glScaled;
 import static org.lwjgl.opengl.GL11.glTranslated;
 import static org.lwjgl.opengl.GL11.glViewport;
 import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
+import static org.lwjgl.opengl.GL20.GL_VERTEX_SHADER;
 import static org.lwjgl.opengl.GL20.glAttachShader;
 import static org.lwjgl.opengl.GL20.glCompileShader;
 import static org.lwjgl.opengl.GL20.glCreateProgram;
@@ -59,14 +61,18 @@ import libs.Model;
 import libs.POGL;
 import libs.Vektor2D;
 import libs.ShaderUtilities;
+import static org.lwjgl.opengl.GL11.glFrustum;
 
 public class AgentSystem extends LWJGLBasisFenster {
 	private ObjektManager agentenSpielwiese;
 	private double runningAverageFrameTime = 1 / 60, avgRatio = 0.75;
 	private long last = System.nanoTime();
-	private int staubShader;
+	
+	private int regenbogenShader;
+	private int tiefeShader;
 
 	public static String fragShaderCode;
+	public static String vertShaderCode;
 	
 	Model object = null;
 	
@@ -133,15 +139,17 @@ public class AgentSystem extends LWJGLBasisFenster {
 			double diff = (now - last) / 1e9;
 			runningAverageFrameTime = avgRatio * runningAverageFrameTime + (1 - avgRatio) * diff;
 			last = now;
-			glUseProgram(staubShader);
+			
 
 			glClearColor(0.2f, 0.95f,0, 0.8f); //Hintergrundfarbe
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			glOrtho(0, WIDTH, HEIGHT, 0, -100, 100);
+			glOrtho(0, WIDTH, HEIGHT, 0, 10, -20);
+			
 			glMatrixMode(GL_MODELVIEW);
+			
 			glDisable(GL_DEPTH_TEST);
 			
 			if (Mouse.isButtonDown(0)) {
@@ -160,11 +168,13 @@ public class AgentSystem extends LWJGLBasisFenster {
 			    kornManager.addKorn(korn);
 			}
 			
-			// holen der uniform locations und anschliessendes setzen
+			// holen der uniform locations und anschliessendes setzen in die shader
 			
-			int timeLocation = glGetUniformLocation(staubShader, "time");
-			glUniform1f(timeLocation, (float)(System.nanoTime() / 1e9));
-			int mouseDownLocation = glGetUniformLocation(staubShader,"mouseDown");
+			int timeLocation = glGetUniformLocation(regenbogenShader, "time");
+			//System.out.println(Math.sin(0.3*(float)(System.nanoTime() / 1e9))); // scheint angenehm zu sein für die augen
+			
+			glUniform1f(timeLocation, (float)(System.nanoTime() / 1e6) % 50); // %50 scheint guter wert für regenbogen effekt zu sein
+			int mouseDownLocation = glGetUniformLocation(regenbogenShader,"mouseDown");
 			glUniform1i(mouseDownLocation, MousebuttonDown ? 1 : 0);
 			
 			kornManager.render();
@@ -194,25 +204,62 @@ public class AgentSystem extends LWJGLBasisFenster {
 	}
 
 	public void shader_setup() {
+		regenbogenShader = glCreateProgram();
+		
 		try {
 			fragShaderCode = ShaderUtilities.readShadercode(config.fragShaderPath);
+			vertShaderCode = ShaderUtilities.readShadercode(config.vertShaderPath);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		staubShader = glCreateProgram();
+		 // Vertex Shader
+	    int vertShader = glCreateShader(GL_VERTEX_SHADER);
+	    glShaderSource(vertShader, vertShaderCode);
+	    glCompileShader(vertShader);
+	    System.out.println(glGetShaderInfoLog(vertShader, 1024));
+	    glAttachShader(regenbogenShader, vertShader);
+	    
+	    // Fragment Shader
+	    int fragShader = glCreateShader(GL_FRAGMENT_SHADER);
+	    glShaderSource(fragShader, fragShaderCode);
+	    glCompileShader(fragShader);
+	    System.out.println(glGetShaderInfoLog(fragShader, 1024));
+	    glAttachShader(regenbogenShader, fragShader);
+	    
+	 // Linken und verwenden
+	    glLinkProgram(regenbogenShader);
+	    glUseProgram(regenbogenShader);
 
-		int fragShader = glCreateShader(GL_FRAGMENT_SHADER);
-		glShaderSource(fragShader, fragShaderCode);
-		glCompileShader(fragShader);
-		System.out.println(glGetShaderInfoLog(fragShader, 1024));
-		glAttachShader(staubShader, fragShader);
-
-		glLinkProgram(staubShader);
-		glUseProgram(staubShader);
-
-		ShaderUtilities.testShaderProgram(staubShader);
+	    ShaderUtilities.testShaderProgram(regenbogenShader);
+		
+//		regenbogenShader = glCreateProgram();
+//
+//		int fragShader = glCreateShader(GL_FRAGMENT_SHADER);
+//		glShaderSource(fragShader, fragShaderCode);
+//		glCompileShader(fragShader);
+//		System.out.println(glGetShaderInfoLog(fragShader, 1024));
+//		glAttachShader(regenbogenShader, fragShader);
+//
+//		glLinkProgram(regenbogenShader);
+//		glUseProgram(regenbogenShader);
+//
+//		ShaderUtilities.testShaderProgram(regenbogenShader);
+//		
+//		
+//		tiefeShader = glCreateProgram();
+//
+//		int vertShader = glCreateShader(GL_VERTEX_SHADER);
+//		glShaderSource(vertShader, vertShaderCode);
+//		glCompileShader(vertShader);
+//		System.out.println(glGetShaderInfoLog(vertShader, 1024));
+//		glAttachShader(regenbogenShader, vertShader);
+//
+//		glLinkProgram(tiefeShader);
+//		glUseProgram(tiefeShader);
+//
+//		ShaderUtilities.testShaderProgram(tiefeShader);
 	}
 
 	public static void main(String[] args) {

@@ -60,9 +60,19 @@ public class Steuerungsverhalten {
 				Agent bObjF = (Agent)bObj;
 				if (LineareAlgebra.euklDistanz(me.position, bObjF.position) < dist)
 					steeringForce.add(LineareAlgebra.sub(me.position, bObjF.position));
+				    if (LineareAlgebra.euklDistanz(me.position,  bObjF.position) < config.SCHNABELWEITE ) {
+				    	// damit es nie dazu kommt dass zwei hühner zu einem verschmelzen
+				    	// wird angenommen, dass die hühner so breit wie ihre schnabelweite sind 
+				    	// (und so kann man das praktischerweise in einer variable kapseln
+				    	LineareAlgebra.normalize(steeringForce);
+						steeringForce.mult(steeringForce.length());
+						return steeringForce;
+				    }
+					
 			}
 		}
 		LineareAlgebra.normalize(steeringForce);
+		
 		return steeringForce;
 	}
 
@@ -108,6 +118,7 @@ public class Steuerungsverhalten {
 		// schaut, welches korn am nächsten ist
 		double minDist = Double.MAX_VALUE;
 		int closestKorn = -1;
+		
 		for (int i = 0; i < me.kornManager.getKoernerCount(); i++) {
 			BasisObjekt bObj = me.kornManager.getKorn(i);
 			if (bObj instanceof Korn) {
@@ -134,11 +145,16 @@ public class Steuerungsverhalten {
 				// ob ein korn gesehen wird
 				if (LineareAlgebra.euklDistanz(me.position, bObjF.position) < dist){
 					steeringForce.add(LineareAlgebra.sub(bObjF.position, me.position));
+					// damit wenn je näher das korn ist alle anderen kräfte für das huhn irrelevant werden so wie in echt lol
+					steeringForce.mult(LineareAlgebra.euklDistanz(me.position, bObj.position));
 				}
 			}
 		}
+		else {
+			LineareAlgebra.normalize(steeringForce);
+		}
 
-		LineareAlgebra.normalize(steeringForce);
+		
 		return steeringForce;
 	}
 	
