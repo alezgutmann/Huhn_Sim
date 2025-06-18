@@ -159,11 +159,10 @@ public class AgentSystem extends LWJGLBasisFenster {
 				MousebuttonDown = false;
 			}
 			
-			// Inside your renderLoop, after processing mouse input:
+			
 			if (Keyboard.isKeyDown(Keyboard.KEY_K)) {
-			    // Example: Place Korn at mouse position or center
 			    int x = Mouse.getX();
-			    int y = HEIGHT - Mouse.getY(); // Convert to window coordinates if needed
+			    int y = HEIGHT - Mouse.getY();
 			    Korn korn = new Korn(new Vektor2D(x,y));
 			    kornManager.addKorn(korn);
 			}
@@ -178,10 +177,9 @@ public class AgentSystem extends LWJGLBasisFenster {
 			glUniform1i(mouseDownLocation, MousebuttonDown ? 1 : 0);
 			
 			kornManager.render();
+			
 			for (int i = 1; i <= agentenSpielwiese.getAgentSize(); i++) {
 				Agent aktAgent = agentenSpielwiese.getAgent(i);
-
-				
 				// Rainbow Mode
 				if (MousebuttonDown) {
 					aktAgent.MAX_SPEED = config.AGENTEN_MAX_SPEED * config.rainbowMultiplier / 2;
