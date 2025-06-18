@@ -6,6 +6,7 @@ varying vec4 color;
 void main() {
 	if (mouseDown == 1){
 		float pi = 3.1415;
+		//phasenversatz um die farben des regenbogens herzustellen
         float r = sin(time) * 0.5 + 0.5;
         float g = sin(time - 2.0 * pi / 3.0) * 0.5 + 0.5;
         float b = sin(time - 4.0 * pi / 3.0) * 0.5 + 0.5;
